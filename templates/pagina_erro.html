@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro - Página não encontrada</title>
+    <style>
+        /* =======================
+           PALETA DE CORES
+        ======================= */
+        :root {
+            --bg-color: #0f0f0f;
+            --primary-color: #e63946;
+            --secondary-color: #1d3557;
+            --accent-color: #457b9d;
+            --text-color: #f1faee;
+            --muted-text: #a8dadc;
+            --card-bg: #1a1a1a;
+        }
+
+        /* =======================
+           RESET E BASE
+        ======================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        main {
+            max-width: 500px;
+            background-color: var(--card-bg);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--muted-text);
+            margin-bottom: 2rem;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="error_container">
+            <h1>{{error.code}}</h1>
+            <h2>Página não encontrada</h2>
+            <p>O conteúdo que você procura pode ter sido removido, renomeado ou está temporariamente indisponível.</p>
+            <button onclick="window.location.href='/api/v1'">Voltar para o início</button>
+        </section>
+    </main>
+
+</body>
+</html>

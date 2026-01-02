@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{titulo}}</title>
+    <style>
+        /* =======================
+           PALETA DE CORES
+        ======================= */
+        :root {
+            --bg-color: #0f0f0f;
+            --primary-color: #e63946;
+            --secondary-color: #1d3557;
+            --accent-color: #457b9d;
+            --text-color: #f1faee;
+            --muted-text: #a8dadc;
+            --card-bg: #1a1a1a;
+        }
+
+        /* =======================
+           BASE GERAL
+        ======================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: var(--text-color);
+            font-size: 2.2em;
+            margin: 1.5rem 0;
+            text-align: center;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        /* =======================
+           HEADER
+        ======================= */
+        header {
+            width: 90%;
+            max-width: 1200px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            flex-wrap: wrap;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        #selec_dia::before{
+            content:"📅";
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 1.2em;
+        }
+        #selec_dia select{
+            padding: 0.6rem 1rem 0.6rem 2rem; /* espaço p/ ícone */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+            appearance: none; /* remove seta padrão */
+        }
+        #selec_dia label {
+            color: var(--muted-text);
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        #selec_dia select {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #selec_dia select:hover {
+            background-color: var(--accent-color);
+        }
+
+        #url_busca {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #url_busca input[type="text"] {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            width: 200px;
+        }
+
+        #url_busca input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        #url_busca button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #url_busca button:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* =======================
+           MAIN E SLIDE DE CARDS
+        ======================= */
+        main {
+            width: 90%;
+            max-width: 1300px;
+            padding: 2rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide-container {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.8s ease-in-out;
+            will-change: transform;
+        }
+
+        .anime-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            overflow: hidden;
+            min-width: 320px;
+            flex: 0 0 320px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideInLeft 1.5s ease forwards;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+        }
+
+        .anime-card img {
+            width: 54%;
+            height: 243px;
+            object-fit: cover;
+            align-self: center;
+            border-radius: 5px;
+            position: relative;
+            top:15px;
+        }
+
+        .anime-card #info {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 0.4rem;
+            text-align: -webkit-center;
+        }
+
+        .anime-card h2 {
+            color: var(--primary-color);
+            font-size: 1.2em;
+            margin-bottom: 0.5rem;
+        }
+
+        .anime-card p {
+            font-size: 0.9em;
+            color: var(--muted-text);
+        }
+
+        /* =======================
+           SETAS DE NAVEGAÇÃO
+        ======================= */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            color: var(--text-color);
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 50%;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-color);
+        }
+
+        #prev { left: -10px; }
+        #next { right: -10px; }
+
+        /* =======================
+           FOOTER
+        ======================= */
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            background: var(--card-bg);
+            color: var(--muted-text);
+            font-size: 0.9em;
+        }
+
+        /* =======================
+           ANIMAÇÕES
+        ======================= */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fadeInDown {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes slideInLeft {
+            from {opacity: 0; transform: translateX(40px);}
+            to {opacity: 1; transform: translateX(0);}
+        }
+
+        /* =======================
+           RESPONSIVIDADE
+        ======================= */
+        @media (max-width: 768px) {
+            .anime-card {
+                min-width: 250px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>{{titulo}}</h1>
+
+    <header>
+        <div id="selec_dia">
+            <label for="dias">Lançamento do dia:</label>
+            <select name="dias" id="dias">
+                <option></option>
+                <option value="sunday">Domingo</option>
+                <option value="monday">Segunda-Feira</option>
+                <option value="tuesday">Terça-Feira</option>
+                <option value="wednesday">Quarta-Feira</option>
+                <option value="thursday">Quinta-Feira</option>
+                <option value="friday">Sexta-Feira</option>
+                <option value="saturday">Sábado</option>
+            </select>
+            <script defer>
+                selec_dia=document.querySelector("select#dias")
+                selec_dia.addEventListener("change", function(){
+                    valor = this.value;
+                    if (valor){window.location.href=`/api/dia?dia=${encodeURIComponent(valor)}`}
+                })
+            </script>
+        </div>
+
+        <div id="url_busca">
+            <form action="/api/busca" method="GET" enctype="multipart/form-data">
+                <input type="text" name="busca" placeholder="Bleach">
+                <button>Buscar</button>
+            </form>
+        </div>
+        {%if info_user%}
+            <div id="nav_bar_user">
+                <p>{{info_user.username}}</p>
+            </div>
+        {%endif%}
+    </header>
+
+    <main>
+        <button id="prev" class="nav-btn">&#10094;</button>
+        <button id="next" class="nav-btn">&#10095;</button>
+
+        <div class="slide-container" id="slide">
+            {% for dado in dados.animes %}
+            <div class="anime-card">
+                <img src="{{dado.images.webp.image_url}}" alt="{{dado.title}}">
+                <div id="info">
+                    <h2>{{dado.title}}</h2>
+                    <p><strong>ID:</strong> {{dado.mal_id}}</p>
+                    <p><strong>Classificação:</strong> {{dado.rating}}</p>
+                    <p><strong>Pontuação:</strong> {{dado.score}}</p>
+                    <p><strong>Popularidade:</strong> {{dado.popularity}}</p>
+                    <p><strong>Ano:</strong> {{dado.year}}</p>
+                    <!-- <p><strong>Episódios:</strong> {{dado.episodes}} - {{dado.status}}</p> -->
+                    <!-- <p><strong>Sinopse:</strong> {{dado.synopsis}}</p> -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <script defer>
+            // Controles do slide lateral
+            const slide = document.getElementById('slide');
+            const prev = document.getElementById('prev');
+            const next = document.getElementById('next');
+            let offset = 0;
+
+            function next_(){
+                next.click()
+                if(offset==-1750){
+                    offset=0
+                }
+            }
+
+            next.addEventListener('click', () => {
+                const maxOffset = -(slide.scrollWidth - slide.clientWidth);
+                if (offset > maxOffset) {
+                    offset -= 350;
+                    slide.style.transform = `translateX(${offset}px)`;
+                };
+                
+            });
+            //BUG
+            setInterval(next_,5000)
+                
+
+            prev.addEventListener('click', () => {
+                if (offset < 0) {
+                    offset += 350;
+                    slide.style.transform = `translateX(${offset}px)`;
+                }
+            });
+        </script>
+    </main>
+
+    <footer>
+        &copy; {{titulo}} - Todos os direitos reservados.
+    </footer>
+</body>
+</html>
